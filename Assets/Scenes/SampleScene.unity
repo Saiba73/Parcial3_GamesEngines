@@ -888,7 +888,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1784824560}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 06e7197b8e4c546449645be227ec083b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -984,13 +984,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocidadMaxima: 10
   aceleracionMaxima: 10
-  rebote: 0.5
-  areaPermitida:
-    serializedVersion: 2
-    x: -4.5
-    y: -4.5
-    width: 9
-    height: 9
 --- !u!96 &1784824566
 TrailRenderer:
   serializedVersion: 3
@@ -1123,7 +1116,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!1 &1949309124
 GameObject:
