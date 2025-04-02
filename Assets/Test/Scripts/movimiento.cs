@@ -21,9 +21,6 @@ public class movimiento : MonoBehaviour
 
     bool tocaPiso;
 
-    //[SerializeField, Range(0f, 1f)]
-    //float rebote = 0.5f;
-
     Vector3 velocidad, velocidadDeseada;
 
     Rigidbody cuerpoRigido;
@@ -39,7 +36,6 @@ public class movimiento : MonoBehaviour
 
     void Awake()
     {
-        //estadosJugador estadoJugador = estadosJugador.idle;
         cuerpoRigido = GetComponent<Rigidbody>();
     }
 
