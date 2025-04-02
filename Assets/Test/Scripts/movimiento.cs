@@ -7,7 +7,7 @@ public class movimiento : MonoBehaviour
     float velocidadMaxima = 10f;
 
     [SerializeField, Range(0f, 100f)]
-    float aceleracionMaxima = 10f;
+    float aceleracionMaxima = 10f, aceleracionMaximaAerea = 1f;
 
     [SerializeField, Range(0f, 10f)]
     float alturaDeSalto = 2f;
@@ -60,7 +60,8 @@ public class movimiento : MonoBehaviour
     void FixedUpdate()
     {
         actualizarEstado();
-        float cambioMaximoDeVelocidad = aceleracionMaxima * Time.deltaTime;
+        float aceleracion = tocaPiso ? aceleracionMaxima : aceleracionMaximaAerea;
+        float cambioMaximoDeVelocidad = aceleracion * Time.deltaTime;
 
         velocidad.x = Mathf.MoveTowards(velocidad.x, velocidadDeseada.x, cambioMaximoDeVelocidad);
         velocidad.z = Mathf.MoveTowards(velocidad.z, velocidadDeseada.z, cambioMaximoDeVelocidad);
