@@ -30,13 +30,15 @@ public class movimiento : MonoBehaviour
 
     bool saltoDeseado;
 
-    int contactoPisoContador;
+    int contactoPisoContador, contactoEnpinacionContador;
 
     int pasosDesdeQueTocoPiso, pasosDesdeUltimoSalto;
 
     bool TocaPiso => contactoPisoContador > 0;
 
-    Vector3 velocidad, velocidadDeseada, normalDeContacto;
+    bool TocaEnpinacion => contactoEnpinacionContador > 0;
+
+    Vector3 velocidad, velocidadDeseada, normalDeContacto, normalDeEnpinacion;
 
     Rigidbody cuerpoRigido;
 
@@ -121,23 +123,50 @@ public class movimiento : MonoBehaviour
                 contactoPisoContador += 1;
                 normalDeContacto += normal;
             }
+            else if(normal.y > -0.01f)
+            {
+                contactoEnpinacionContador += 1;
+                normalDeEnpinacion += normal;
+            }
         }
     }
 
     void saltar()
     {
-        if(TocaPiso || faseDeSalto < cantidadDeSaltosAereos)
+        Vector3 direccionDeSalto;
+        if(TocaPiso)
         {
+            direccionDeSalto = normalDeContacto;
+        }
+        else if(TocaEnpinacion)
+        {
+            direccionDeSalto = normalDeEnpinacion;
+            faseDeSalto = 0;
+        }
+        else if(cantidadDeSaltosAereos > 0 && faseDeSalto <= cantidadDeSaltosAereos)
+        {
+            if(faseDeSalto == 0)
+            {
+                faseDeSalto = 1;
+            }
+            direccionDeSalto = normalDeContacto;
+        }
+        else
+        {
+            return;
+        }
+        
             pasosDesdeUltimoSalto++;
             faseDeSalto++;
             float velocidadDeSalto = Mathf.Sqrt(-2f * Physics.gravity.y * alturaDeSalto);
-            float velocidadAliniadaAInclinacion = Vector3.Dot(velocidad, normalDeContacto);
+            direccionDeSalto = (direccionDeSalto + Vector3.up).normalized;
+            float velocidadAliniadaAInclinacion = Vector3.Dot(velocidad, direccionDeSalto);
             if(velocidadAliniadaAInclinacion > 0)
             {
                 velocidadDeSalto = Mathf.Max(velocidadDeSalto - velocidadAliniadaAInclinacion, 0f);
             }
-            velocidad += normalDeContacto * velocidadDeSalto;
-        }
+            velocidad += direccionDeSalto * velocidadDeSalto;
+        
     }
 
     void actualizarEstado ()
@@ -145,10 +174,13 @@ public class movimiento : MonoBehaviour
         pasosDesdeQueTocoPiso += 1;
         pasosDesdeUltimoSalto += 1;
         velocidad = cuerpoRigido.linearVelocity;
-        if(TocaPiso || apegarseAlPiso())
+        if(TocaPiso || apegarseAlPiso() || revisaContactosEnpinados())
         {
             pasosDesdeQueTocoPiso = 0;
-            faseDeSalto = 0;
+            if(pasosDesdeUltimoSalto > 1)
+            {
+                faseDeSalto = 0;
+            }
             if (contactoPisoContador > 1)
             {
                 normalDeContacto.Normalize();
@@ -209,8 +241,23 @@ public class movimiento : MonoBehaviour
 
     void reinciarEstadoPiso()
     {
-        contactoPisoContador = 0;
-        normalDeContacto = Vector3.zero;
+        contactoPisoContador = contactoEnpinacionContador = 0;
+        normalDeContacto = normalDeEnpinacion = Vector3.zero;
+    }
+
+    bool revisaContactosEnpinados()
+    {
+        if(contactoEnpinacionContador > 1)
+        {
+            normalDeEnpinacion.Normalize();
+            if(normalDeEnpinacion.y >= productoScalarPisoMin)
+            {
+                contactoEnpinacionContador = 1;
+                normalDeContacto = normalDeEnpinacion;
+                return true;
+            }
+        }
+        return false;
     }
 
     Vector3 projeccionEnPlanoDeContacto (Vector3 vector)
