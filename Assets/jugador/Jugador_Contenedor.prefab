@@ -388,10 +388,11 @@ MonoBehaviour:
   aceleracionDeCorrer: 5
   aceleracionMaximaAerea: 1
   alturaDeSalto: 2
-  cantidadDeSaltosAereos: 0
+  cantidadDeSaltosAereos: 1
   anguloMaximoDePiso: 45
   velocidadMaximaDeApego: 100
   distanciaDeRayo: 1.1
+  noPuedeAtaquar: 0
 --- !u!114 &5632934739979994777
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -414,6 +415,7 @@ MonoBehaviour:
   - {fileID: 2168637660428996189}
   - {fileID: 4609219008752392022}
   TiempoDeAtaque: 1
+  scriptMovimiento: {fileID: 3094704938430903972}
 --- !u!1 &2168637660428996189
 GameObject:
   m_ObjectHideFlags: 0

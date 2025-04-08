@@ -38,21 +38,20 @@ public class movimiento : MonoBehaviour
 
     bool TocaEnpinacion => contactoEnpinacionContador > 0;
 
+    float velocidadMaximaOriginal;
+    float aceleracionMaximaOriginal;
+    float alturaDeSaltoOriginal;
+    float distanciaDeRayoOriginal;
+    int cantidadDeSaltosOriginal;
+
     Vector3 velocidad, velocidadDeseada, normalDeContacto, normalDeEnpinacion;
 
     Rigidbody cuerpoRigido;
 
-
-
-    /*private enum estadosJugador
-    {
-        idle,
-        moviendo,
-        salto
-    }*/
-
     float productoScalarPisoMin;
 
+
+    public bool noPuedeAtaquar;
     void OnValidate()
     {
         productoScalarPisoMin = Mathf.Cos(anguloMaximoDePiso * Mathf.Deg2Rad);
@@ -62,32 +61,62 @@ public class movimiento : MonoBehaviour
     {
         cuerpoRigido = GetComponent<Rigidbody>();
         OnValidate();
+
+        // Velocidades originales se guardan para poder crear variaciones en el movimiento.
+        velocidadMaximaOriginal = velocidadMaxima;
+        aceleracionMaximaOriginal = aceleracionMaxima;
+        alturaDeSaltoOriginal = alturaDeSalto;
+        distanciaDeRayoOriginal = distanciaDeRayo;
+        cantidadDeSaltosOriginal = cantidadDeSaltosAereos;
     }
 
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.K) && velocidadMaxima != velocidadMaxima + velocidadDeCorrer)
+        if (Input.GetKeyDown(KeyCode.L))
         {
-            velocidadMaxima += velocidadDeCorrer;
-            aceleracionMaxima += aceleracionDeCorrer;
+            transform.localScale = new Vector3(1f, 0.5f, 1f);
+            noPuedeAtaquar = true;
+            velocidadMaxima = 2f;
+            aceleracionMaxima = 0.5f;
+            alturaDeSalto = 10f;
+            distanciaDeRayo = 0.5f;
+            cantidadDeSaltosAereos = 0;
         }
-        if(Input.GetKeyUp(KeyCode.K) && velocidadMaxima != velocidadMaxima - velocidadDeCorrer)
+        else if(Input.GetKeyUp(KeyCode.L))
         {
-            velocidadMaxima -= velocidadDeCorrer;
-            aceleracionMaxima -= aceleracionDeCorrer;
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            noPuedeAtaquar = false;
+            velocidadMaxima = velocidadMaximaOriginal;
+            aceleracionMaxima = aceleracionMaximaOriginal;
+            alturaDeSalto = alturaDeSaltoOriginal;
+            distanciaDeRayo = distanciaDeRayoOriginal;
+            cantidadDeSaltosAereos = cantidadDeSaltosOriginal;
         }
-        saltoDeseado |= Input.GetButtonDown("Jump");
-        Vector2 jugadorInput;
-        jugadorInput.x = Input.GetAxis("Horizontal");
-        jugadorInput.y = Input.GetAxis("Vertical");
-        jugadorInput = Vector2.ClampMagnitude(jugadorInput, 1f);
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.K) && velocidadMaxima != velocidadMaxima + velocidadDeCorrer)
+            {
+                velocidadMaxima += velocidadDeCorrer;
+                aceleracionMaxima += aceleracionDeCorrer;
+            }
+            if (Input.GetKeyUp(KeyCode.K) && velocidadMaxima != velocidadMaxima - velocidadDeCorrer)
+            {
+                velocidadMaxima -= velocidadDeCorrer;
+                aceleracionMaxima -= aceleracionDeCorrer;
+            }
+            saltoDeseado |= Input.GetButtonDown("Jump");
+            Vector2 jugadorInput;
+            jugadorInput.x = Input.GetAxis("Horizontal");
+            jugadorInput.y = Input.GetAxis("Vertical");
+            jugadorInput = Vector2.ClampMagnitude(jugadorInput, 1f);
 
-        velocidadDeseada = new Vector3(jugadorInput.x, 0f, jugadorInput.y) * velocidadMaxima;
+            velocidadDeseada = new Vector3(jugadorInput.x, 0f, jugadorInput.y) * velocidadMaxima;
 
-        GetComponent<Renderer>().material.SetColor(
-            "_BaseColor", TocaPiso ? Color.black : Color.white
-        );
+            GetComponent<Renderer>().material.SetColor(
+                "_BaseColor", TocaPiso ? Color.black : Color.white
+            );
+        }
 
     }
 
@@ -96,12 +125,6 @@ public class movimiento : MonoBehaviour
     {
         actualizarEstado();
         ajustarVelocidad();
-        //float aceleracion = tocaPiso ? aceleracionMaxima : aceleracionMaximaAerea;
-        //float cambioMaximoDeVelocidad = aceleracion * Time.deltaTime;
-
-        //velocidad.x = Mathf.MoveTowards(velocidad.x, velocidadDeseada.x, cambioMaximoDeVelocidad);
-        //velocidad.z = Mathf.MoveTowards(velocidad.z, velocidadDeseada.z, cambioMaximoDeVelocidad);
-
         if(saltoDeseado)
         {
             saltoDeseado = false;
