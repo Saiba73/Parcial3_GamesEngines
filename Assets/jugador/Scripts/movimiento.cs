@@ -6,10 +6,10 @@ using UnityEngine.InputSystem;
 public class movimiento : MonoBehaviour
 {
     [SerializeField, Range(0f, 100f)]
-    float velocidadMaxima = 10f;
+    float velocidadMaxima = 10f, velocidadDeCorrer = 2f;
 
     [SerializeField, Range(0f, 100f)]
-    float aceleracionMaxima = 10f, aceleracionMaximaAerea = 1f;
+    float aceleracionMaxima = 10f, aceleracionDeCorrer = 2f, aceleracionMaximaAerea = 1f;
 
     [SerializeField, Range(0f, 10f)]
     float alturaDeSalto = 2f;
@@ -67,6 +67,16 @@ public class movimiento : MonoBehaviour
 
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.K) && velocidadMaxima != velocidadMaxima + velocidadDeCorrer)
+        {
+            velocidadMaxima += velocidadDeCorrer;
+            aceleracionMaxima += aceleracionDeCorrer;
+        }
+        if(Input.GetKeyUp(KeyCode.K) && velocidadMaxima != velocidadMaxima - velocidadDeCorrer)
+        {
+            velocidadMaxima -= velocidadDeCorrer;
+            aceleracionMaxima -= aceleracionDeCorrer;
+        }
         saltoDeseado |= Input.GetButtonDown("Jump");
         Vector2 jugadorInput;
         jugadorInput.x = Input.GetAxis("Horizontal");
