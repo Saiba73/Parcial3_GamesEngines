@@ -41,7 +41,7 @@ public class movimiento : MonoBehaviour
     float velocidadMaximaOriginal;
     float aceleracionMaximaOriginal;
     float alturaDeSaltoOriginal;
-    float distanciaDeRayoOriginal;
+    //float distanciaDeRayoOriginal;
     int cantidadDeSaltosOriginal;
 
     Vector3 velocidad, velocidadDeseada, normalDeContacto, normalDeEnpinacion;
@@ -66,58 +66,57 @@ public class movimiento : MonoBehaviour
         velocidadMaximaOriginal = velocidadMaxima;
         aceleracionMaximaOriginal = aceleracionMaxima;
         alturaDeSaltoOriginal = alturaDeSalto;
-        distanciaDeRayoOriginal = distanciaDeRayo;
+        //distanciaDeRayoOriginal = distanciaDeRayo;
         cantidadDeSaltosOriginal = cantidadDeSaltosAereos;
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKey(KeyCode.L) && TocaPiso)
         {
-            transform.localScale = new Vector3(1f, 0.5f, 1f);
+            //transform.localScale = new Vector3(1f, 0.5f, 1f);
             noPuedeAtaquar = true;
-            velocidadMaxima = 2f;
-            aceleracionMaxima = 0.5f;
-            alturaDeSalto = 10f;
-            distanciaDeRayo = 0.5f;
-            cantidadDeSaltosAereos = 0;
+            velocidadMaxima = 0f;
+            aceleracionMaxima = 5f;
+            if (alturaDeSalto != 50f)
+            {
+                alturaDeSalto += 0.01f;
+            }
+            //distanciaDeRayo = 0.5f;
+            //cantidadDeSaltosAereos = 0;
         }
-        else if(Input.GetKeyUp(KeyCode.L))
+        else if (Input.GetKeyUp(KeyCode.L) || !TocaPiso)
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            //transform.localScale = new Vector3(1f, 1f, 1f);
             noPuedeAtaquar = false;
             velocidadMaxima = velocidadMaximaOriginal;
             aceleracionMaxima = aceleracionMaximaOriginal;
             alturaDeSalto = alturaDeSaltoOriginal;
-            distanciaDeRayo = distanciaDeRayoOriginal;
+            //distanciaDeRayo = distanciaDeRayoOriginal;
             cantidadDeSaltosAereos = cantidadDeSaltosOriginal;
         }
-        else
+        if (Input.GetKeyDown(KeyCode.K) && velocidadMaxima != velocidadMaxima + velocidadDeCorrer)
         {
-            if (Input.GetKeyDown(KeyCode.K) && velocidadMaxima != velocidadMaxima + velocidadDeCorrer)
-            {
-                velocidadMaxima += velocidadDeCorrer;
-                aceleracionMaxima += aceleracionDeCorrer;
-            }
-            if (Input.GetKeyUp(KeyCode.K) && velocidadMaxima != velocidadMaxima - velocidadDeCorrer)
-            {
-                velocidadMaxima -= velocidadDeCorrer;
-                aceleracionMaxima -= aceleracionDeCorrer;
-            }
-            saltoDeseado |= Input.GetButtonDown("Jump");
-            Vector2 jugadorInput;
-            jugadorInput.x = Input.GetAxis("Horizontal");
-            jugadorInput.y = Input.GetAxis("Vertical");
-            jugadorInput = Vector2.ClampMagnitude(jugadorInput, 1f);
-
-            velocidadDeseada = new Vector3(jugadorInput.x, 0f, jugadorInput.y) * velocidadMaxima;
-
-            GetComponent<Renderer>().material.SetColor(
-                "_BaseColor", TocaPiso ? Color.black : Color.white
-            );
+            velocidadMaxima += velocidadDeCorrer;
+            aceleracionMaxima += aceleracionDeCorrer;
         }
+        else if (Input.GetKeyUp(KeyCode.K) && velocidadMaxima != velocidadMaxima - velocidadDeCorrer)
+        {
+            velocidadMaxima -= velocidadDeCorrer;
+            aceleracionMaxima -= aceleracionDeCorrer;
+        }
+        saltoDeseado |= Input.GetButtonDown("Jump");
+        Vector2 jugadorInput;
+        jugadorInput.x = Input.GetAxis("Horizontal");
+        jugadorInput.y = Input.GetAxis("Vertical");
+        jugadorInput = Vector2.ClampMagnitude(jugadorInput, 1f);
 
+        velocidadDeseada = new Vector3(jugadorInput.x, 0f, jugadorInput.y) * velocidadMaxima;
+
+        /*GetComponent<Renderer>().material.SetColor(
+            "_BaseColor", TocaPiso ? Color.black : Color.white
+        );*/
     }
 
     //En FixedUpdate se llama al comiezo de cada paso de una simulacion de fisicas
@@ -130,6 +129,8 @@ public class movimiento : MonoBehaviour
             saltoDeseado = false;
             saltar();
         }
+
+
         
         cuerpoRigido.linearVelocity = velocidad;
         reinciarEstadoPiso();

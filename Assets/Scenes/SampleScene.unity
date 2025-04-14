@@ -1374,6 +1374,10 @@ PrefabInstance:
       propertyPath: aceleracionMaxima
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 3094704938430903972, guid: e3ee03e7200331141a47b192607b4d54, type: 3}
+      propertyPath: aceleracionMaximaAerea
+      value: 57.8
+      objectReference: {fileID: 0}
     - target: {fileID: 6898129301631617182, guid: e3ee03e7200331141a47b192607b4d54, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.5502713
