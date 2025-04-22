@@ -26,6 +26,9 @@ public class movimiento : MonoBehaviour
     [SerializeField, Min(0f)]
     float distanciaDeRayo = 1f;
 
+    [SerializeField]
+    Transform espacioDeInputDeJugador = default;
+
     int faseDeSalto;
 
     bool saltoDeseado;
@@ -73,6 +76,8 @@ public class movimiento : MonoBehaviour
 
     void Update()
     {
+        
+
         if (Input.GetKey(KeyCode.L) && TocaPiso)
         {
             //transform.localScale = new Vector3(1f, 0.5f, 1f);
@@ -112,8 +117,20 @@ public class movimiento : MonoBehaviour
         jugadorInput.y = Input.GetAxis("Vertical");
         jugadorInput = Vector2.ClampMagnitude(jugadorInput, 1f);
 
-        velocidadDeseada = new Vector3(jugadorInput.x, 0f, jugadorInput.y) * velocidadMaxima;
-
+        if (espacioDeInputDeJugador)
+        {
+            Vector3 frente = espacioDeInputDeJugador.forward;
+            frente.y = 0f;
+            frente.Normalize();
+            Vector3 derecha = espacioDeInputDeJugador.right;
+            derecha.y = 0f;
+            derecha.Normalize();
+            velocidadDeseada = (frente * jugadorInput.y + derecha * jugadorInput.x) * velocidadMaxima;
+        }
+        else
+        {
+            velocidadDeseada = new Vector3(jugadorInput.x, 0f, jugadorInput.y) * velocidadMaxima;
+        }
         /*GetComponent<Renderer>().material.SetColor(
             "_BaseColor", TocaPiso ? Color.black : Color.white
         );*/

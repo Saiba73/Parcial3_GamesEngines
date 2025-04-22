@@ -26,6 +26,9 @@ public class CamraOrbitante : MonoBehaviour
     [SerializeField, Min(0f)]
     float retrasoDeAlineacion = 5F;
 
+    [SerializeField, Range(0f, 90f)]
+    float alinearRangoDeSuavidad = 45f;
+
     float ultimaRotacionManualTiempo;
 
     Vector2 angulosDeOrbita = new Vector2(45f, 0f);
@@ -116,8 +119,19 @@ public class CamraOrbitante : MonoBehaviour
             return false;
         }
 
+        
         float anguloAlQueSeDirige = ObtenerAngulo(movimiento / Mathf.Sqrt(movimientoDeltaSqr));
-        angulosDeOrbita.y = anguloAlQueSeDirige;
+        float cambioAbs = Mathf.Abs(Mathf.DeltaAngle(angulosDeOrbita.y, anguloAlQueSeDirige));
+        float cambioDeRotacion = velocidadDeRotacion * Mathf.Min(Time.unscaledDeltaTime, movimientoDeltaSqr);
+        if(cambioAbs < alinearRangoDeSuavidad)
+        {
+            cambioDeRotacion *= cambioDeRotacion / alinearRangoDeSuavidad;
+        }
+        else if(180f - cambioAbs < alinearRangoDeSuavidad)
+        {
+            cambioDeRotacion *= (180f - cambioAbs) / alinearRangoDeSuavidad;
+        }
+        angulosDeOrbita.y = Mathf.MoveTowardsAngle(angulosDeOrbita.y, anguloAlQueSeDirige, cambioDeRotacion);
         return true;
     }
 
