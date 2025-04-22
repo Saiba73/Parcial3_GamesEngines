@@ -151,11 +151,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enfoque: {fileID: 0}
-  distancia: 5
+  distancia: 4
   radioDeEnfoque: 1
   centroEnfocando: 0.5
-  velocidadDeRotacion: 90
-  anguloVerticalMin: -30
+  velocidadDeRotacion: 156
+  anguloVerticalMin: -25
   anguloVerticalMax: 60
-  retrasoDeAlineacion: 5
+  retrasoDeAlineacion: 2
   alinearRangoDeSuavidad: 45
+  mascaraDeObstruccion:
+    serializedVersion: 2
+    m_Bits: 54

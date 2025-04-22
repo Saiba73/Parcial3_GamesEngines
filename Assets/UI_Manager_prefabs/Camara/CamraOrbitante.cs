@@ -35,6 +35,7 @@ public class CamraOrbitante : MonoBehaviour
 
     Vector3 puntoDeEnfoque, puntoDeEnfoquePrevio;
 
+
     private void OnValidate()
     {
         if(anguloVerticalMax < anguloVerticalMin)
@@ -62,9 +63,11 @@ public class CamraOrbitante : MonoBehaviour
         {
             rotacionVista = transform.localRotation;
         }
-        //Quaternion rotacionVista = Quaternion.Euler(angulosDeOrbita);
+
         Vector3 direccionDeCamara = rotacionVista * Vector3.forward;
         Vector3 posicionDeVista = puntoDeEnfoque - direccionDeCamara * distancia;
+
+        
         transform.SetPositionAndRotation(posicionDeVista, rotacionVista);
     }
 
@@ -82,7 +85,6 @@ public class CamraOrbitante : MonoBehaviour
             }
             if(distanciaDeCamaraYObjetivo > radioDeEnfoque)
             {
-                //puntoDeEnfoque = Vector3.Lerp(objetivo, puntoDeEnfoque, radioDeEnfoque / distanciaDeCamaraYObjetivo);
                 t = Mathf.Min(t, radioDeEnfoque / distanciaDeCamaraYObjetivo);
             }
             puntoDeEnfoque = Vector3.Lerp(objetivo, puntoDeEnfoque, t);
