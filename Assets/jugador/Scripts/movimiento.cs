@@ -78,7 +78,7 @@ public class movimiento : MonoBehaviour
     {
         
 
-        if (Input.GetKey(KeyCode.L) && TocaPiso)
+        if (Input.GetKey(KeyCode.E) && TocaPiso)
         {
             //transform.localScale = new Vector3(1f, 0.5f, 1f);
             noPuedeAtaquar = true;
@@ -91,7 +91,7 @@ public class movimiento : MonoBehaviour
             //distanciaDeRayo = 0.5f;
             //cantidadDeSaltosAereos = 0;
         }
-        else if (Input.GetKeyUp(KeyCode.L) || !TocaPiso)
+        else if (Input.GetKeyUp(KeyCode.E) || !TocaPiso)
         {
             //transform.localScale = new Vector3(1f, 1f, 1f);
             noPuedeAtaquar = false;
@@ -101,15 +101,15 @@ public class movimiento : MonoBehaviour
             //distanciaDeRayo = distanciaDeRayoOriginal;
             cantidadDeSaltosAereos = cantidadDeSaltosOriginal;
         }
-        if (Input.GetKeyDown(KeyCode.K) && velocidadMaxima != velocidadMaxima + velocidadDeCorrer)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && velocidadMaxima != velocidadMaxima + velocidadDeCorrer && TocaPiso)
         {
             velocidadMaxima += velocidadDeCorrer;
             aceleracionMaxima += aceleracionDeCorrer;
         }
-        else if (Input.GetKeyUp(KeyCode.K) && velocidadMaxima != velocidadMaxima - velocidadDeCorrer)
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && velocidadMaxima != velocidadMaxima - velocidadDeCorrer)
         {
-            velocidadMaxima -= velocidadDeCorrer;
-            aceleracionMaxima -= aceleracionDeCorrer;
+            velocidadMaxima = velocidadMaxima;
+            aceleracionMaxima = aceleracionMaxima;
         }
         saltoDeseado |= Input.GetButtonDown("Jump");
         Vector2 jugadorInput;
