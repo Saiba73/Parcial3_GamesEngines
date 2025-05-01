@@ -108,8 +108,8 @@ public class movimiento : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift) && velocidadMaxima != velocidadMaxima - velocidadDeCorrer)
         {
-            velocidadMaxima = velocidadMaxima;
-            aceleracionMaxima = aceleracionMaxima;
+            velocidadMaxima -= velocidadDeCorrer;
+            aceleracionMaxima -= aceleracionDeCorrer;
         }
         saltoDeseado |= Input.GetButtonDown("Jump");
         Vector2 jugadorInput;

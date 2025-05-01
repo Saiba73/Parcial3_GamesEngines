@@ -9,17 +9,17 @@ public class Vida : MonoBehaviour
 
     void Update()
     {
-        txtHP.text = hp.ToString();
+        //txtHP.text = hp.ToString();
     }
 
     public void AgregarVida()
     {
-        hp += 1;
+        hp++;
     }
 
     public void QuitarVida()
     {
-        hp -= 1;
+        hp--;
         if (hp <= 0)
         {
             SceneManager.LoadScene("MenuDerrota", LoadSceneMode.Single);

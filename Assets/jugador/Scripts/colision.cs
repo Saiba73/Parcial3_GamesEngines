@@ -17,6 +17,7 @@ public class colision : MonoBehaviour
 
         if (collision.gameObject.tag == "enemigo")
         {
+            //Destroy(collision.gameObject);
             vidaScript.QuitarVida();
 
         }

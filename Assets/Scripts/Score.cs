@@ -15,7 +15,7 @@ public class Score : MonoBehaviour
     public void AgregarPuntos()
     {
         puntos = puntos + 1;
-        if (puntos == 1)
+        if (puntos == 4)
         {
             SceneManager.LoadScene("MenuVictoria", LoadSceneMode.Single);
         }
