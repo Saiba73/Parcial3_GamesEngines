@@ -12,7 +12,7 @@ public class movimiento : MonoBehaviour
     float aceleracionMaxima = 10f, aceleracionDeCorrer = 2f, aceleracionMaximaAerea = 1f;
 
     [SerializeField, Range(0f, 10f)]
-    float alturaDeSalto = 2f;
+    public float alturaDeSalto = 2f;
 
     [SerializeField, Range(0, 5)]
     int cantidadDeSaltosAereos;
@@ -29,15 +29,17 @@ public class movimiento : MonoBehaviour
     [SerializeField]
     Transform espacioDeInputDeJugador = default;
 
+    [SerializeField] Transform modeloVisualHolder;
+
     int faseDeSalto;
 
-    bool saltoDeseado;
+    public bool saltoDeseado;
 
     int contactoPisoContador, contactoEnpinacionContador;
 
     int pasosDesdeQueTocoPiso, pasosDesdeUltimoSalto;
 
-    bool TocaPiso => contactoPisoContador > 0;
+    public bool TocaPiso => contactoPisoContador > 0;
 
     bool TocaEnpinacion => contactoEnpinacionContador > 0;
 
@@ -151,6 +153,21 @@ public class movimiento : MonoBehaviour
         
         cuerpoRigido.linearVelocity = velocidad;
         reinciarEstadoPiso();
+
+        RotarModeloVisual();
+    }
+
+    void RotarModeloVisual()
+    {
+        Vector3 direccion = new Vector3(velocidad.x, 0f, velocidad.z);
+
+        if (direccion.sqrMagnitude > 0.01f)
+        {
+            float rotacionY = Mathf.Atan2(direccion.x, direccion.z) * Mathf.Rad2Deg;
+
+            // Lock X to -90°, allow Y to rotate, keep Z at 0°
+            modeloVisualHolder.rotation = Quaternion.Euler(0f, rotacionY, 0f);
+        }
     }
 
     void OnCollisionEnter(Collision colision)
