@@ -18,20 +18,26 @@ public class Animaciones : MonoBehaviour
         }
 
 
-        if(scriptMovimiento.alturaDeSalto > 2f && scriptMovimiento.saltoDeseado)
+        if(scriptMovimiento.alturaDeSalto > 2f && Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetTrigger("Super Salto");
         }
-        
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        else if (Input.GetKeyDown(KeyCode.Space))
         {
-            anim.SetBool("Puede Correr", true);
-            anim.SetBool("Puede Caminar", false);
+            anim.SetTrigger("Saltar");
         }
-        else if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+
+
+        
+        if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && !(Input.GetKey(KeyCode.E)) || (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && !(Input.GetKey(KeyCode.E) && Input.GetKeyUp(KeyCode.LeftShift)))
         {
             anim.SetBool("Puede Caminar", true);
             anim.SetBool("Puede Correr", false);
+        }
+        else if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && Input.GetKeyDown(KeyCode.LeftShift) && !(Input.GetKey(KeyCode.E)))
+        {
+            anim.SetBool("Puede Caminar", false);
+            anim.SetBool("Puede Correr", true);
         }
         else if(Input.GetAxis("Horizontal") == 0 || Input.GetAxis("Vertical") == 0)
         {
@@ -39,10 +45,7 @@ public class Animaciones : MonoBehaviour
             anim.SetBool("Puede Caminar", false);
         }
 
-        if (scriptMovimiento.saltoDeseado)
-        {
-            anim.SetTrigger("Saltar");
-        }
+        
         
 
     }

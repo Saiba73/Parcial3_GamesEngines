@@ -1053,6 +1053,10 @@ PrefabInstance:
       propertyPath: puedeSaltar
       value: 
       objectReference: {fileID: 730629905}
+    - target: {fileID: 4829158005597376988, guid: e3ee03e7200331141a47b192607b4d54, type: 3}
+      propertyPath: scriptMovimiento
+      value: 
+      objectReference: {fileID: 730629905}
     - target: {fileID: 5006347561243213520, guid: e3ee03e7200331141a47b192607b4d54, type: 3}
       propertyPath: txtHP
       value: 
@@ -1071,7 +1075,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6898129301631617182, guid: e3ee03e7200331141a47b192607b4d54, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 87.1
+      value: 77.46
       objectReference: {fileID: 0}
     - target: {fileID: 6898129301631617182, guid: e3ee03e7200331141a47b192607b4d54, type: 3}
       propertyPath: m_LocalPosition.z

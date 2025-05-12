@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class movimiento : MonoBehaviour
 {
     [SerializeField, Range(0f, 100f)]
-    float velocidadMaxima = 10f, velocidadDeCorrer = 2f;
+    public float velocidadMaxima = 10f, velocidadDeCorrer = 2f;
 
     [SerializeField, Range(0f, 100f)]
     float aceleracionMaxima = 10f, aceleracionDeCorrer = 2f, aceleracionMaximaAerea = 1f;
