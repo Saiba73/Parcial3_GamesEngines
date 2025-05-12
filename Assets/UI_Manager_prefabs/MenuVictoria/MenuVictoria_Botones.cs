@@ -5,7 +5,7 @@ public class MenuVictoria_Botones : MonoBehaviour
 {
     public void iniciarJuego()
     {
-        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("JuegoPrincipal", LoadSceneMode.Single);
     }
     public void salirJuego()
     {

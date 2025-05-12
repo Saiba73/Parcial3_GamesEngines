@@ -9,14 +9,14 @@ EditorBuildSettings:
     path: Assets/Scenes/MenuPrincipal.unity
     guid: 270b583d768c53c4eaef1d7640724f5b
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/Scenes/JuegoPrincipal.unity
+    guid: c8d7b6b41bfaf5a4e9fae24e0baf5bc2
   - enabled: 1
     path: Assets/Scenes/MenuVictoria.unity
     guid: 91dd4fe054d41cd40a121905a40a68bd
   - enabled: 1
     path: Assets/Scenes/MenuDerrota.unity
-    guid: 1120105cd07e63d419ddec31eaef1078
+    guid: 6cd33df783e8f304387e2d6a5e501a39
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0

@@ -6,6 +6,6 @@ public class MenuPrincipal_Botones : MonoBehaviour
 
     public void iniciarJuego()
     {
-        SceneManager.LoadScene("SampleScene", LoadSceneMode.Single);
+        SceneManager.LoadScene("JuegoPrincipal", LoadSceneMode.Single);
     }
 }
