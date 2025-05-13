@@ -5,6 +5,7 @@ public class colision : MonoBehaviour
 
     public Score scoreScript;
     public Vida vidaScript;
+    public Sonido scriptSonido;
 
     void Start()
     {
@@ -36,6 +37,8 @@ public class colision : MonoBehaviour
 
         if (other.gameObject.tag == "Score")
         {
+            scriptSonido.audioSecundario.clip = scriptSonido.Recojer;
+            scriptSonido.audioSecundario.Play();
             Destroy(other.gameObject);
             scoreScript.AgregarPuntos();
         }

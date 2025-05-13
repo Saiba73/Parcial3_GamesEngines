@@ -55,6 +55,8 @@ public class movimiento : MonoBehaviour
 
     float productoScalarPisoMin;
 
+    //public bool animSaltoCheck;
+
 
     public bool noPuedeAtaquar;
     void OnValidate()
@@ -147,6 +149,7 @@ public class movimiento : MonoBehaviour
         {
             saltoDeseado = false;
             saltar();
+            
         }
 
 

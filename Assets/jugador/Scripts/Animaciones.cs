@@ -4,7 +4,7 @@ public class Animaciones : MonoBehaviour
 {
     public Animator anim;
     public movimiento scriptMovimiento;
-
+    public Sonido scriptSonido;
     int cantidadDeSaltos = 0;
     void Start()
     {
@@ -22,11 +22,21 @@ public class Animaciones : MonoBehaviour
 
         if(scriptMovimiento.alturaDeSalto > 2f && Input.GetKeyDown(KeyCode.Space))
         {
+            
+            scriptSonido.personajeAudio.clip = scriptSonido.Salto;
+            scriptSonido.personajeAudio.Play();
+            
+
             anim.SetTrigger("Super Salto");
             cantidadDeSaltos++;
         }
         else if (Input.GetKeyDown(KeyCode.Space) && cantidadDeSaltos < 2)
         {
+            
+            scriptSonido.personajeAudio.clip = scriptSonido.Salto;
+            scriptSonido.personajeAudio.Play();
+            
+
             anim.SetTrigger("Saltar");
             cantidadDeSaltos++;
             Debug.Log(cantidadDeSaltos);
@@ -34,8 +44,10 @@ public class Animaciones : MonoBehaviour
 
         if(scriptMovimiento.TocaPiso)
         {
-            cantidadDeSaltos = 0;
+           cantidadDeSaltos = 0;
         }
+
+        
 
 
         if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.E) && scriptMovimiento.TocaPiso)

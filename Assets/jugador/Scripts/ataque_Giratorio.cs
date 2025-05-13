@@ -6,7 +6,7 @@ public class ataque_Giratorio : MonoBehaviour
     public GameObject[] HitBoxAtaque;
 
     [SerializeField]
-    int TiempoDeAtaque = 1;
+    float TiempoDeAtaque = 1;
 
     bool prevenirRepeticionDeAtaque = false;
     
