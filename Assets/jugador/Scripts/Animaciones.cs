@@ -4,6 +4,8 @@ public class Animaciones : MonoBehaviour
 {
     public Animator anim;
     public movimiento scriptMovimiento;
+
+    int cantidadDeSaltos = 0;
     void Start()
     {
         
@@ -21,24 +23,33 @@ public class Animaciones : MonoBehaviour
         if(scriptMovimiento.alturaDeSalto > 2f && Input.GetKeyDown(KeyCode.Space))
         {
             anim.SetTrigger("Super Salto");
+            cantidadDeSaltos++;
         }
-        else if (Input.GetKeyDown(KeyCode.Space))
+        else if (Input.GetKeyDown(KeyCode.Space) && cantidadDeSaltos < 2)
         {
             anim.SetTrigger("Saltar");
+            cantidadDeSaltos++;
+            Debug.Log(cantidadDeSaltos);
+        }
+
+        if(scriptMovimiento.TocaPiso)
+        {
+            cantidadDeSaltos = 0;
         }
 
 
-        
-        if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && !(Input.GetKey(KeyCode.E)) || (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && !(Input.GetKey(KeyCode.E) && Input.GetKeyUp(KeyCode.LeftShift)))
+        if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.E) && scriptMovimiento.TocaPiso)
+        {
+            //Debug.Log("Entro");
+            anim.SetBool("Puede Caminar", false);
+            anim.SetBool("Puede Correr", true);
+        }
+        else if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && !Input.GetKey(KeyCode.E) && scriptMovimiento.TocaPiso )
         {
             anim.SetBool("Puede Caminar", true);
             anim.SetBool("Puede Correr", false);
         }
-        else if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && Input.GetKeyDown(KeyCode.LeftShift) && !(Input.GetKey(KeyCode.E)))
-        {
-            anim.SetBool("Puede Caminar", false);
-            anim.SetBool("Puede Correr", true);
-        }
+        
         else if(Input.GetAxis("Horizontal") == 0 || Input.GetAxis("Vertical") == 0)
         {
             anim.SetBool("Puede Caminar", false);
