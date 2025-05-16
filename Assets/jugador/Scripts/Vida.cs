@@ -9,7 +9,7 @@ public class Vida : MonoBehaviour
 
     void Update()
     {
-        //txtHP.text = hp.ToString();
+        txtHP.text = hp.ToString();
     }
 
     public void AgregarVida()

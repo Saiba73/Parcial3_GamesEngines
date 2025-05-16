@@ -5,6 +5,8 @@ using UnityEngine.UIElements;
 [RequireComponent (typeof(Camera))]
 public class CamraOrbitante : MonoBehaviour
 {
+    public Menu_Pausa pausa;
+
     [SerializeField]
     Transform enfoque = default;
 
@@ -52,23 +54,30 @@ public class CamraOrbitante : MonoBehaviour
 
     void LateUpdate()
     {
-        ActualizarPuntoDeEnfoque();
-        Quaternion rotacionVista;
-        if (RotacionManual() || RotacionAutomatica())
+        if(!pausa.puedeUsarCamara)
         {
-            RestringirAngulos();
-            rotacionVista = Quaternion.Euler(angulosDeOrbita);
+
         }
-        else
+        else if(pausa.puedeUsarCamara)
         {
-            rotacionVista = transform.localRotation;
+            ActualizarPuntoDeEnfoque();
+            Quaternion rotacionVista;
+            if (RotacionManual() || RotacionAutomatica())
+            {
+                RestringirAngulos();
+                rotacionVista = Quaternion.Euler(angulosDeOrbita);
+            }
+            else
+            {
+                rotacionVista = transform.localRotation;
+            }
+
+            Vector3 direccionDeCamara = rotacionVista * Vector3.forward;
+            Vector3 posicionDeVista = puntoDeEnfoque - direccionDeCamara * distancia;
+
+
+            transform.SetPositionAndRotation(posicionDeVista, rotacionVista);
         }
-
-        Vector3 direccionDeCamara = rotacionVista * Vector3.forward;
-        Vector3 posicionDeVista = puntoDeEnfoque - direccionDeCamara * distancia;
-
-        
-        transform.SetPositionAndRotation(posicionDeVista, rotacionVista);
     }
 
     void ActualizarPuntoDeEnfoque()

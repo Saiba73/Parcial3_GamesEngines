@@ -6,6 +6,7 @@ public class Menu_Pausa : MonoBehaviour
 
     public GameObject canvasDePausa;
     public GameObject controles;
+    public bool puedeUsarCamara = true;
 
     private void Start()
     {
@@ -34,6 +35,7 @@ public class Menu_Pausa : MonoBehaviour
     {
         canvasDePausa.SetActive(true);
         pausado = true;
+        puedeUsarCamara = false;
         Time.timeScale = 0;
     }
 
@@ -42,6 +44,7 @@ public class Menu_Pausa : MonoBehaviour
         canvasDePausa.SetActive(false);
         pausado = false;
         controles.SetActive(false);
+        puedeUsarCamara = true;
         Time.timeScale = 1;
     }
 

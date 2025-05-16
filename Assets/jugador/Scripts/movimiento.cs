@@ -105,15 +105,16 @@ public class movimiento : MonoBehaviour
             //distanciaDeRayo = distanciaDeRayoOriginal;
             cantidadDeSaltosAereos = cantidadDeSaltosOriginal;
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && velocidadMaxima != velocidadMaxima + velocidadDeCorrer && TocaPiso)
+        if (Input.GetKey(KeyCode.LeftShift) && velocidadMaxima != velocidadMaximaOriginal + velocidadDeCorrer)
         {
             velocidadMaxima += velocidadDeCorrer;
             aceleracionMaxima += aceleracionDeCorrer;
         }
-        else if (Input.GetKeyUp(KeyCode.LeftShift) && velocidadMaxima != velocidadMaxima - velocidadDeCorrer)
+        else if (Input.GetKeyUp(KeyCode.LeftShift) && velocidadMaxima != velocidadMaximaOriginal - velocidadDeCorrer)
         {
             velocidadMaxima -= velocidadDeCorrer;
             aceleracionMaxima -= aceleracionDeCorrer;
+            Debug.Log(velocidadMaxima);
         }
         saltoDeseado |= Input.GetButtonDown("Jump");
         Vector2 jugadorInput;
@@ -158,6 +159,7 @@ public class movimiento : MonoBehaviour
         reinciarEstadoPiso();
 
         RotarModeloVisual();
+        Debug.Log(velocidadMaxima);
     }
 
     void RotarModeloVisual()
@@ -168,7 +170,7 @@ public class movimiento : MonoBehaviour
         {
             float rotacionY = Mathf.Atan2(direccion.x, direccion.z) * Mathf.Rad2Deg;
 
-            // Lock X to -90°, allow Y to rotate, keep Z at 0°
+           
             modeloVisualHolder.rotation = Quaternion.Euler(0f, rotacionY, 0f);
         }
     }

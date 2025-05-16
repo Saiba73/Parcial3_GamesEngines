@@ -8,8 +8,8 @@ public class colision_ataque : MonoBehaviour
     {
         if (other.gameObject.tag == "enemigo")
         {
-            scriptSonido.audioSecundario.clip = scriptSonido.DestruyeEnemigo;
-            scriptSonido.audioSecundario.Play();
+            //scriptSonido.audioSecundario.clip = scriptSonido.DestruyeEnemigo;
+            //scriptSonido.audioSecundario.Play();
             Destroy(other.gameObject);
         }
 
