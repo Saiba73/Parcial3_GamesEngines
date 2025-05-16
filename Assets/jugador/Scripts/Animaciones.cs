@@ -39,7 +39,6 @@ public class Animaciones : MonoBehaviour
 
             anim.SetTrigger("Saltar");
             cantidadDeSaltos++;
-            Debug.Log(cantidadDeSaltos);
         }
 
         if(scriptMovimiento.TocaPiso)
@@ -52,7 +51,6 @@ public class Animaciones : MonoBehaviour
 
         if ((Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) && Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.E) && scriptMovimiento.TocaPiso)
         {
-            //Debug.Log("Entro");
             anim.SetBool("Puede Caminar", false);
             anim.SetBool("Puede Correr", true);
         }
